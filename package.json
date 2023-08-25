@@ -1,6 +1,6 @@
 {
-  "name": "lowlight",
-  "version": "2.9.0",
+  "name": "lowlight-cjs",
+  "version": "2.9.0-beta",
   "description": "Virtual syntax highlighting for virtual DOMs and non-HTML things",
   "license": "MIT",
   "keywords": [
@@ -29,13 +29,13 @@
     "lib/all.js",
     "lib/common.js"
   ],
-  "type": "module",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "./dist/lib/index.js",
+  "types": "./dist/es/index.d.ts",
+  "module": "./dist/es/index.js",
   "files": [
-    "lib/",
-    "index.d.ts",
-    "index.js"
+    "dist",
+    "package.json",
+    "pnpm-lock.yaml"
   ],
   "dependencies": {
     "@types/hast": "^2.0.0",
@@ -43,6 +43,11 @@
     "highlight.js": "~11.8.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.22.11",
+    "@babel/preset-env": "^7.22.10",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
     "@types/mdast": "^3.0.0",
     "@types/node": "^20.0.0",
     "@types/unist": "^2.0.0",
@@ -54,6 +59,8 @@
     "rehype": "^12.0.0",
     "remark-cli": "^11.0.0",
     "remark-preset-wooorm": "^9.0.0",
+    "rollup": "^2.75.7",
+    "rollup-plugin-terser": "^7.0.2",
     "type-coverage": "^2.0.0",
     "typescript": "^5.0.0",
     "unist-builder": "^3.0.0",
@@ -61,7 +68,6 @@
     "xo": "^0.54.0"
   },
   "scripts": {
-    "prepack": "npm run generate && npm run build && npm run format",
     "generate": "node --conditions development script/build-registry.js",
     "build": "tsc --build --clean && tsc --build && type-coverage",
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
